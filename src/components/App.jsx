@@ -33,7 +33,7 @@ function App({
                     return <tr key={i}>
                       {
                         row.map((item, i) => {
-                          return <td key={i}>
+                          return <td key={i} className={item !== 0 ? `t${item}` : null}>
                             {item || ''}
                           </td>
                         })

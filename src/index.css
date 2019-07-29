@@ -31,3 +31,15 @@ td {
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(-30px); }
 }
+
+.t2 { background: #CCC; }
+.t4 { background: rgb(161, 161, 161); }
+.t8 { background: rgb(255, 204, 138); }
+.t16 { background: rgb(255, 112, 68); }
+.t32 { background: rgb(255, 10, 10); }
+.t64 { background: rgb(101, 255, 96); }
+.t128 { background: rgb(96, 255, 207); }
+.t256 { background: rgb(96, 236, 255); }
+.t512 { background: rgb(96, 138, 255); }
+.t1024 { background: rgb(165, 96, 255); }
+.t2048 { background: rgb(255, 242, 125); }

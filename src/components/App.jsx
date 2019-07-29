@@ -4,13 +4,15 @@ import { start, moveUp, moveDown, moveLeft, moveRight } from '../actions';
 
 function App({
   score,
+  scoreGained,
   board,
   started,
   start,
+  turns,
   moveUp,
   moveDown,
   moveLeft,
-  moveRight
+  moveRight,
 }) {
   return (
     <div className="App">
@@ -22,7 +24,7 @@ function App({
               onClick={start}
             >restart</button>
             <p>
-              score: {score}
+              score: {score} {scoreGained ? <span key={turns} className='score-gained'>(+{scoreGained})</span> : null}
             </p>
             <table>
               <tbody>
@@ -70,6 +72,8 @@ export default connect(
     started: state.game.started,
     board: state.game.board,
     score: state.game.score,
+    scoreGained: state.game.scoreGained,
+    turns: state.game.turns,
   }),
   {
     start,

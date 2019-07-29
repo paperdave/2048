@@ -21,3 +21,13 @@ td {
 .App {
   margin-left: 40px;
 }
+
+.score-gained {
+  display: inline-block;
+  color: cornflowerblue;
+  animation: fade 1s linear both;
+}
+@keyframes fade {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-30px); }
+}

@@ -4,6 +4,8 @@ const initialState = {
   started: false,
   board: null,
   score: null,
+  scoreGained: null,
+  turns: 0,
 };
 
 export default function reduce(state = initialState, action) {
@@ -18,6 +20,7 @@ export default function reduce(state = initialState, action) {
           [0, 0, 0, 0],
         ],
         score: 0,
+        turns: 0,
       };
 
       // Spawn Two Tiles
@@ -52,6 +55,7 @@ export default function reduce(state = initialState, action) {
       const rotate90 = action.dir === DIR_DOWN || action.dir === DIR_UP;
 
       let boardMoved = false;
+      let scoreGained = 0;
 
       for (let i = 0; i < 4; i++) {
         for (let j = flipX ? 3 : 0; flipX ? j >= 0 : j < 4; j += flipX ? -1 : 1) {
@@ -71,6 +75,7 @@ export default function reduce(state = initialState, action) {
               if (board[flipX ? targetJ + 1 : targetJ - 1] && board[flipX ? targetJ + 1 : targetJ - 1][i] === val) {
                 val *= 2;
                 targetJ += flipX ? 1 : -1;
+                scoreGained += val;
               }
               if (j !== targetJ) {
                 board[j][i] = 0;
@@ -81,6 +86,7 @@ export default function reduce(state = initialState, action) {
               if (board[i][flipX ? targetJ + 1 : targetJ - 1] === val) {
                 val *= 2;
                 targetJ += flipX ? 1 : -1;
+                scoreGained += val;
               }
               if (j !== targetJ) {
                 board[i][j] = 0;
@@ -95,7 +101,10 @@ export default function reduce(state = initialState, action) {
       if (boardMoved) {
         let newState = {
           ...state,
+          score: state.score + scoreGained,
+          turns: state.turns + 1,
           board,
+          scoreGained,
         };
 
         newState = reduce(newState, spawnNewTile());

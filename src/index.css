@@ -1,45 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
 body {
+  background: #3d3d3d;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin: 0;
-  width: 50px;
-  height: 50px;
-  display: inline-flex;
-  align-items: center;
+  color: white;
+  font-family: Roboto, sans-serif;
   justify-content: center;
+  align-items: center;
 }
-
-.App {
-  margin-left: 40px;
-}
-
-.score-gained {
-  display: inline-block;
-  color: cornflowerblue;
-  animation: fade 1s linear both;
-}
-@keyframes fade {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-30px); }
-}
-
-.t2 { background: #CCC; }
-.t4 { background: rgb(161, 161, 161); }
-.t8 { background: rgb(255, 204, 138); }
-.t16 { background: rgb(255, 112, 68); }
-.t32 { background: rgb(255, 10, 10); }
-.t64 { background: rgb(101, 255, 96); }
-.t128 { background: rgb(96, 255, 207); }
-.t256 { background: rgb(96, 236, 255); }
-.t512 { background: rgb(96, 138, 255); }
-.t1024 { background: rgb(165, 96, 255); }
-.t2048 { background: rgb(255, 242, 125); }

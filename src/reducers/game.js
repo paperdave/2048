@@ -1,18 +1,18 @@
-import { START, spawnNewTile, SPAWN_TILE, MOVE, DIR_DOWN, DIR_RIGHT, DIR_UP } from '../actions';
+import { START, spawnNewTile, SPAWN_TILE, MOVE, DIR_DOWN, DIR_RIGHT, DIR_UP, start } from '../actions';
 
-const initialState = {
-  started: false,
-  board: null,
-  score: null,
-  scoreGained: null,
-  turns: 0,
-};
+function id() {
+  return Math.random().toString().substr(2)
+}
 
-export default function reduce(state = initialState, action) {
+export default function reduce(state, action) {
+  // Initial Logic: Start a game.
+  if(!state) {
+    return reduce({}, start());
+  }
+
   switch (action.type) {
     case START: {
       let newState = {
-        started: true,
         board: [
           [0, 0, 0, 0],
           [0, 0, 0, 0],
@@ -20,6 +20,7 @@ export default function reduce(state = initialState, action) {
           [0, 0, 0, 0],
         ],
         score: 0,
+        scoreGained: false,
         turns: 0,
       };
 

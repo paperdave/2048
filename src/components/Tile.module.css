@@ -1,0 +1,28 @@
+.root {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 110px;
+  height: 110px;
+}
+.text {
+  font-family: Roboto, sans-serif;
+  font-weight: bold;
+}
+
+.c2     { --tile-color: #F4F2DF; }
+.c4     { --tile-color: #D0C98C; }
+.c8     { --tile-color: #F8BA5E; }
+.c16    { --tile-color: #FD8F3F; }
+.c32    { --tile-color: #FD783F; }
+.c64    { --tile-color: #FD3F3F; }
+.c128   { --tile-color: #FD3FB1; }
+.c256   { --tile-color: #C03FFD; }
+.c512   { --tile-color: #713FFD; }
+.c1024  { --tile-color: #3F96FD; }
+.c2048  { --tile-color: #3FFDA2; }
+.c4096  { --tile-color: #9FFF03; }
+.c8192  { --tile-color: #FAFF03; }
+.c16384 { --tile-color: #FFD703; }
+.c32768 { --tile-color: #FF8B03; }
+.c65536 { --tile-color: #000000; }

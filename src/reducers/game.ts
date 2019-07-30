@@ -1,26 +1,35 @@
-import { START, spawnNewTile, SPAWN_TILE, MOVE, DIR_DOWN, DIR_RIGHT, DIR_UP, start } from '../actions';
+import { spawnNewTile, ActionObject, Type, Direction } from '../actions';
 
+export type ITile = { value: number, id: string } | null;
+export type ITileExt = ITile & { x: number, y: number };
+
+export type IBoard = ITile[][];
+
+export interface IGame {
+  board: IBoard,
+  score: number,
+  scoreGained: number | null,
+  turns: number,
+}
+
+/** Generates an Identifier */
 function id() {
   return Math.random().toString().substr(2)
 }
 
-export default function reduce(state, action) {
-  // Initial Logic: Start a game.
-  if(!state) {
-    return reduce({}, start());
-  }
-
+export default function reduce(state: IGame, action: ActionObject): IGame {
   switch (action.type) {
-    case START: {
-      let newState = {
+    case state === undefined ? action.type : null:
+    case Type.START: {
+      let newState: IGame = {
         board: [
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
-          [0, 0, 0, 0],
+          [null, null, null, null],
+          [null, null, null, null],
+          [null, null, null, null],
+          [null, null, null, null],
         ],
         score: 0,
-        scoreGained: false,
+        scoreGained: null,
         turns: 0,
       };
 
@@ -30,17 +39,17 @@ export default function reduce(state, action) {
 
       return newState;
     }
-    case SPAWN_TILE: {
-      if (!state.board.find(x => x.find(x => x === 0))) {
+    case Type.SPAWN_TILE: {
+      if (!state.board.find(x => x.find(x => x === null))) {
         let board = state.board.map(x => x.concat()).concat();
         let x, y;
 
         do {
           x = Math.floor(Math.random() * 4);
           y = Math.floor(Math.random() * 4);
-        } while (board[x][y] !== 0);
+        } while (board[x][y] !== null);
 
-        board[x][y] = Math.random() < 0.9 ? 2 : 4;
+        board[x][y] = { id: id(), value: Math.random() < 0.9 ? 2 : 4 };
 
         return {
           ...state,
@@ -49,19 +58,20 @@ export default function reduce(state, action) {
       }
       return state;
     }
-    case MOVE: {
+    case Type.MOVE: {
       let board = state.board.map(x => x.concat()).concat();
 
-      const flipX = action.dir === DIR_RIGHT || action.dir === DIR_DOWN;
-      const rotate90 = action.dir === DIR_DOWN || action.dir === DIR_UP;
+      const flipX = action.dir === Direction.RIGHT || action.dir === Direction.DOWN;
+      const rotate90 = action.dir === Direction.DOWN || action.dir === Direction.UP;
 
       let boardMoved = false;
       let scoreGained = 0;
 
       for (let i = 0; i < 4; i++) {
         for (let j = flipX ? 3 : 0; flipX ? j >= 0 : j < 4; j += flipX ? -1 : 1) {
-          let val = rotate90 ? board[j][i] : board[i][j];
-          if (val) {
+          let tile = rotate90 ? board[j][i] : board[i][j];
+          if (tile) {
+            let value = tile.value;
             let targetJ = j;
             while (
               !(rotate90
@@ -73,25 +83,27 @@ export default function reduce(state, action) {
               targetJ += flipX ? 1 : -1;
             }
             if (rotate90) {
-              if (board[flipX ? targetJ + 1 : targetJ - 1] && board[flipX ? targetJ + 1 : targetJ - 1][i] === val) {
-                val *= 2;
+              const targetTile = board[flipX ? targetJ + 1 : targetJ - 1] && board[flipX ? targetJ + 1 : targetJ - 1][i];
+              if (targetTile && targetTile.value === value) {
+                value *= 2;
                 targetJ += flipX ? 1 : -1;
-                scoreGained += val;
+                scoreGained += value;
               }
               if (j !== targetJ) {
-                board[j][i] = 0;
-                board[targetJ][i] = val;
+                board[j][i] = null;
+                board[targetJ][i] = { id: tile.id, value };;
                 boardMoved = true;
               }
             } else {
-              if (board[i][flipX ? targetJ + 1 : targetJ - 1] === val) {
-                val *= 2;
+              const targetTile = board[i][flipX ? targetJ + 1 : targetJ - 1];
+              if (targetTile && targetTile.value === tile.value) {
+                value *= 2;
                 targetJ += flipX ? 1 : -1;
-                scoreGained += val;
+                scoreGained += value;
               }
               if (j !== targetJ) {
-                board[i][j] = 0;
-                board[i][targetJ] = val;
+                board[i][j] = null;
+                board[i][targetJ] = { id: tile.id, value };
                 boardMoved = true;
               }
             }
@@ -100,7 +112,7 @@ export default function reduce(state, action) {
       }
 
       if (boardMoved) {
-        let newState = {
+        let newState: IGame = {
           ...state,
           score: state.score + scoreGained,
           turns: state.turns + 1,

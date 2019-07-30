@@ -1,8 +1,11 @@
 import React from 'react'
 import styles from './Board.module.css';
 import { connect } from 'react-redux';
+import { IBoard, ITileExt } from '../reducers/game';
+import { IStore } from '../store';
+import Tile from './Tile';
 
-function Board({ board }) {
+function Board({ board }: { board: IBoard }) {
   return (
     <div className={styles.root}>
       {/* The Board */}
@@ -26,9 +29,21 @@ function Board({ board }) {
       </svg>
 
       {/* The Tiles */}
-      <div>
+      <div className={styles.tileContainer}>
         {
-          JSON.stringify(board.flatMap(row => row.map(tile => tile)))
+          (board
+            .flatMap((row, y) => row.map((tile, x) => (tile && { ...tile, x, y })))
+            .filter(((tile) => tile !== null)) as ITileExt[])
+            .sort((tile1, tile2) => (tile1.id > tile2.id) as any)
+            .map((tile) => {
+              if(!tile) {
+                return null;
+              }
+              return <Tile
+                key={tile.id}
+                tile={tile}
+              />
+            })
         }
       </div>
 
@@ -37,7 +52,7 @@ function Board({ board }) {
 }
 
 export default connect(
-  state => ({
+  (state: IStore) => ({
     board: state.game.board,
   }),
   { },

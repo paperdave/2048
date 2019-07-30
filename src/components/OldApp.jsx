@@ -82,6 +82,6 @@ export default connect(
     moveUp,
     moveDown,
     moveLeft,
-    moveRight
+    moveRight,
   },
 )(App);

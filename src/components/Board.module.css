@@ -1,5 +1,12 @@
 .root {
-  width: 500px;
-  height: 500px;
+  width: 512px;
+  height: 512px;
   background: #252525;
+  position: relative;
+}
+
+.tileContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

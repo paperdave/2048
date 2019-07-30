@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { moveUp, moveDown, moveRight, moveLeft } from '../actions';
+import queueExec from '../utils/queue-exec';
 
 function Input({
   moveUp,
@@ -15,12 +16,22 @@ function Input({
 }) {
   useEffect(() => {
     console.log('rebinding');
-    function onKeyPress(ev: KeyboardEvent) {
-      switch (ev.key) {
+    const activateKey = queueExec(function(key: string) {
+      switch (key) {
         case 'ArrowUp': { moveUp(); break; }
         case 'ArrowDown': { moveDown(); break; }
         case 'ArrowLeft': { moveLeft(); break; }
         case 'ArrowRight': { moveRight(); break; }
+        default:
+          break;
+      }
+    }, 125);
+    function onKeyPress(ev: KeyboardEvent) {
+      switch (ev.key) {
+        case 'ArrowUp': { activateKey(ev.key); break; }
+        case 'ArrowDown': { activateKey(ev.key); break; }
+        case 'ArrowLeft': { activateKey(ev.key); break; }
+        case 'ArrowRight': { activateKey(ev.key); break; }
         default:
           break;
       }

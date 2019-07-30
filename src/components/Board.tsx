@@ -38,7 +38,7 @@ function Board({ board }: { board: IBoard }) {
               return <Tile
                 key={tile.id}
                 tile={tile}
-              />
+              />;
             })
         }
       </div>

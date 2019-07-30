@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Tile.module.css';
 import { ITileExt } from '../reducers/game';
+import { motion } from 'framer-motion';
 
 function Tile({ tile }: { tile: ITileExt }) {
   let fontSize = 48;
@@ -14,11 +15,19 @@ function Tile({ tile }: { tile: ITileExt }) {
     fontSize = 30;
   }
   return (
-    <div
+    <motion.div
       className={styles.root}
-      style={{
-        transform: `translate(${tile.x * 114}px, ${tile.y * 114}px)`,
+      animate={{
+        x: tile.x * 114,
+        y: tile.y * 114,
+        scale: 1,
       }}
+      initial={{
+        x: tile.x * 114,
+        y: tile.y * 114,
+        scale: 0,
+      }}
+      transition={{ type: 'spring', damping: 40, stiffness: 650 }}
     >
       <svg
         width="110"
@@ -49,8 +58,7 @@ function Tile({ tile }: { tile: ITileExt }) {
           {tile.value}
         </text>
       </svg>
-
-    </div>
+    </motion.div>
   )
 }
 

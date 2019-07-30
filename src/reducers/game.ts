@@ -14,7 +14,7 @@ export interface IGame {
 
 /** Generates an Identifier */
 function id() {
-  return Math.random().toString().substr(2)
+  return Math.random().toString().substr(2);
 }
 
 export default function reduce(state: IGame, action: ActionObject): IGame {

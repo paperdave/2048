@@ -2,6 +2,10 @@
 
 body {
   background: #3d3d3d;
+  background-image: url('./background.svg');
+  background-size: 128px;
+  animation: bgmove 5s linear infinite;
+
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -10,4 +14,13 @@ body {
   font-family: Roboto, sans-serif;
   justify-content: center;
   align-items: center;
+}
+
+@keyframes bgmove {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -128px;
+  }
 }

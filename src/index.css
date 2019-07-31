@@ -16,6 +16,10 @@ body {
   align-items: center;
 }
 
+svg {
+  user-select: none;
+}
+
 @keyframes bgmove {
   from {
     background-position-x: 0;

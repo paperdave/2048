@@ -13,8 +13,6 @@ function Header({ score, start }: ({ score: number, start: EventHandler })) {
       <path d="M10 0H502V10H512V96H0V10H10V0Z" fill="#A3A3A3" />
       <g>
         <path d="M296 10H492V20H502V66H492V76H296V66H286V20H296V10Z" fill="#252525" />
-
-
         <text
           x="395px"
           y="43px"

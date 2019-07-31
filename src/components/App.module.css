@@ -1,4 +1,25 @@
 .root {
-  max-width: 500px;
+  max-width: 512px;
   width: 100vw;
+  transition: font-size 350ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+h1 {
+  font-size: 64px;
+  margin-bottom: 10px;
+}
+
+.info > p:first-child {
+  margin-top: 0;
+}
+.info > p:last-child {
+  margin-bottom: 0;
+}
+
+.info + p {
+  margin-top: 0;
+}
+
+.root.expanded {
+  font-size: 1.20em;
 }

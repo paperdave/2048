@@ -12,8 +12,10 @@ body {
   margin: 0;
   color: white;
   font-family: Roboto, sans-serif;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+
+  overflow-x: hidden;
 }
 
 svg {
@@ -27,4 +29,19 @@ svg {
   to {
     background-position-x: -128px;
   }
+}
+
+.spacer {
+  flex: 1;
+}
+
+#root {
+  margin-bottom: 24px;
+}
+
+a {
+  color: #6cd5ff;
+}
+a:not(:hover) {
+  text-decoration: none;
 }

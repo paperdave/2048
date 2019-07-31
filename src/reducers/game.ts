@@ -1,6 +1,6 @@
 import { spawnNewTile, ActionObject, Type, Direction } from '../actions';
 
-export type ITile = { value: number, id: string } | null;
+export type ITile = { value: number, id: string, removed?: boolean } | null;
 export type ITileExt = ITile & { x: number, y: number };
 
 export type IBoard = ITile[][];
@@ -10,6 +10,8 @@ export interface IGame {
   score: number,
   scoreGained: number | null,
   turns: number,
+  removedTiles: ITileExt[],
+  lose: boolean,
 }
 
 /** Generates an Identifier */
@@ -28,9 +30,11 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
           [null, null, null, null],
           [null, null, null, null],
         ],
+        removedTiles: [],
         score: 0,
         scoreGained: null,
         turns: 0,
+        lose: false,
       };
 
       // Spawn Two Tiles
@@ -55,11 +59,16 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
           ...state,
           board,
         };
+      } else {
+        return {
+          ...state,
+          lose: true,
+        }
       }
-      return state;
     }
     case Type.MOVE: {
       let board = state.board.map(x => x.concat()).concat();
+      const removedTiles: ITileExt[] = [];
 
       const flipX = action.dir === Direction.RIGHT || action.dir === Direction.DOWN;
       const rotate90 = action.dir === Direction.DOWN || action.dir === Direction.UP;
@@ -91,6 +100,10 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
               }
               if (j !== targetJ) {
                 board[j][i] = null;
+                const replaceTile = board[targetJ][i];
+                if (replaceTile !== null) {
+                  removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: targetJ, x: i, removed: true });
+                }
                 board[targetJ][i] = { id: tile.id, value };;
                 boardMoved = true;
               }
@@ -103,6 +116,10 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
               }
               if (j !== targetJ) {
                 board[i][j] = null;
+                const replaceTile = board[i][targetJ];
+                if (replaceTile !== null) {
+                  removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: i, x: targetJ, removed: true });
+                }
                 board[i][targetJ] = { id: tile.id, value };
                 boardMoved = true;
               }
@@ -118,6 +135,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
           turns: state.turns + 1,
           board,
           scoreGained,
+          removedTiles
         };
 
         newState = reduce(newState, spawnNewTile());

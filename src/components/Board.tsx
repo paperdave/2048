@@ -5,7 +5,7 @@ import { IBoard, ITileExt } from '../reducers/game';
 import { IStore } from '../store';
 import Tile from './Tile';
 
-function Board({ board }: { board: IBoard }) {
+function Board({ board, removedTiles }: { board: IBoard, removedTiles: ITileExt[] }) {
   return (
     <div className={styles.root}>
       {/* The Board */}
@@ -30,6 +30,7 @@ function Board({ board }: { board: IBoard }) {
           (board
             .flatMap((row, y) => row.map((tile, x) => (tile && { ...tile, x, y })))
             .filter(((tile) => tile !== null)) as ITileExt[])
+            .concat(removedTiles)
             .sort((tile1, tile2) => (tile1.id > tile2.id) as any)
             .map((tile) => {
               if(!tile) {
@@ -50,6 +51,7 @@ function Board({ board }: { board: IBoard }) {
 export default connect(
   (state: IStore) => ({
     board: state.game.board,
+    removedTiles: state.game.removedTiles,
   }),
   { },
 )(Board);

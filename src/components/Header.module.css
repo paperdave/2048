@@ -1,3 +1,18 @@
 .root {
   margin-bottom: -14px;
 }
+
+@keyframes moveUpAndFade {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+.scoreGained {
+  animation: moveUpAndFade 1s linear forwards;
+}

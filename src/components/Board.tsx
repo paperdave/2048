@@ -5,7 +5,7 @@ import { IBoard, ITileExt } from '../reducers/game';
 import { IStore } from '../store';
 import Tile from './Tile';
 
-function Board({ board, removedTiles }: { board: IBoard, removedTiles: ITileExt[] }) {
+function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITileExt[], lose: boolean }) {
   return (
     <div className={styles.root}>
       {/* The Board */}
@@ -42,8 +42,9 @@ function Board({ board, removedTiles }: { board: IBoard, removedTiles: ITileExt[
               />;
             })
         }
-      </div>
+        {JSON.stringify(lose)}
 
+      </div>
     </div>
   )
 }
@@ -52,6 +53,7 @@ export default connect(
   (state: IStore) => ({
     board: state.game.board,
     removedTiles: state.game.removedTiles,
+    lose: state.game.lose,
   }),
   { },
 )(Board);

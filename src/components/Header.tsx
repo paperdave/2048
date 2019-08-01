@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux';
 import { IStore } from '../store';
 import { start } from '../actions';
@@ -7,7 +7,10 @@ import { motion } from 'framer-motion';
 
 type EventHandler = () => void;
 
-function Header({ score, start }: ({ score: number, start: EventHandler })) {
+function Header({ turns, score, start, scoreGained }: ({ score: number, scoreGained: number | null, turns: number, start: EventHandler })) {
+  const ref = useRef();
+  const elem = ref.current as any as SVGTextElement;
+
   return (
     <svg className={styles.root} width="512" height="96" viewBox="0 0 512 96" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 0H502V10H512V96H0V10H10V0Z" fill="#A3A3A3" />
@@ -21,7 +24,21 @@ function Header({ score, start }: ({ score: number, start: EventHandler })) {
           textAnchor="middle"
           alignmentBaseline="middle"
           fontWeight='bold'
+          ref={ref as any}
         >Score: {score}</text>
+        {
+          scoreGained && <text
+            key={turns}
+            x={390 + (elem ? (elem.textContent as any).length * 6 : 0) + 'px'}
+            y="43px"
+            className={styles.scoreGained}
+            fill="cornflowerblue"
+            font-size="20px"
+            textAnchor="left"
+            alignmentBaseline="middle"
+            fontWeight='bold'
+          >+{scoreGained}</text>
+        }
       </g>
       <motion.g
         onClick={start}
@@ -46,6 +63,8 @@ function Header({ score, start }: ({ score: number, start: EventHandler })) {
 export default connect(
   (state: IStore) => ({
     score: state.game.score,
+    scoreGained: state.game.scoreGained,
+    turns: state.game.turns,
   }),
   { start }
 )(Header);

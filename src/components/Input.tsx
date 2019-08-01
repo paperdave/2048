@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { moveUp, moveDown, moveRight, moveLeft } from '../actions';
-import queueExec from '../utils/queue-exec';
+import { throttle } from '@reverse/debounce';
 
 function Input({
   moveUp,
@@ -15,8 +15,7 @@ function Input({
   moveRight: Function,
 }) {
   useEffect(() => {
-    console.log('rebinding');
-    const activateKey = queueExec(function(key: string) {
+    const activateKey = throttle.throttle(function(key: string) {
       switch (key) {
         case 'ArrowUp': { moveUp(); break; }
         case 'ArrowDown': { moveDown(); break; }

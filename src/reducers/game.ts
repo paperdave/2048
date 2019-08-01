@@ -1,4 +1,5 @@
 import { spawnNewTile, ActionObject, Type, Direction } from '../actions';
+import { randomInt, chance } from '@reverse/random';
 
 export type ITile = { value: number, id: string, removed?: boolean } | null;
 export type ITileExt = ITile & { x: number, y: number };
@@ -49,11 +50,11 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
         let x, y;
 
         do {
-          x = Math.floor(Math.random() * 4);
-          y = Math.floor(Math.random() * 4);
+          x = randomInt(0, 3);
+          y = randomInt(0, 3);
         } while (board[x][y] !== null);
 
-        board[x][y] = { id: id(), value: Math.random() < 0.9 ? 2 : 4 };
+        board[x][y] = { id: id(), value: chance(90) ? 2 : 4 };
 
         return {
           ...state,

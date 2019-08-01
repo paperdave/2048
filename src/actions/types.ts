@@ -2,12 +2,13 @@ export enum Type {
   START,
   MOVE,
   SPAWN_TILE,
+  GET_SAVE_FILE,
 };
 export enum Direction {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT,
+  UP = 'UP',
+  DOWN = 'DOWN',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
 };
 
 export type StartAction = { type: Type.START };

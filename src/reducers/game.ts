@@ -44,6 +44,16 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
 
       return newState;
     }
+    case Type.GET_SAVE_FILE: {
+      if(state.lose) {
+        return null as any;
+      } else {
+        return {
+          ...state,
+          scoreGained: 0,
+        }
+      }
+    }
     case Type.SPAWN_TILE: {
       if (!state.board.find(x => x.find(x => x === null))) {
         let board = state.board.map(x => x.concat()).concat();
@@ -69,6 +79,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
     }
     case Type.MOVE: {
       let board = state.board.map(x => x.concat()).concat();
+      let boardMerge: boolean[][] = board.map(x => x.map(x => false));
       const removedTiles: ITileExt[] = [];
 
       const flipX = action.dir === Direction.RIGHT || action.dir === Direction.DOWN;
@@ -93,7 +104,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
               targetJ += flipX ? 1 : -1;
             }
             if (rotate90) {
-              const targetTile = board[flipX ? targetJ + 1 : targetJ - 1] && board[flipX ? targetJ + 1 : targetJ - 1][i];
+              const targetTile = boardMerge[flipX ? targetJ + 1 : targetJ - 1] && boardMerge[flipX ? targetJ + 1 : targetJ - 1][i] === false && board[flipX ? targetJ + 1 : targetJ - 1][i];
               if (targetTile && targetTile.value === value) {
                 value *= 2;
                 targetJ += flipX ? 1 : -1;
@@ -104,12 +115,13 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
                 const replaceTile = board[targetJ][i];
                 if (replaceTile !== null) {
                   removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: targetJ, x: i, removed: true });
+                  boardMerge[targetJ][i] = true;
                 }
                 board[targetJ][i] = { id: tile.id, value };;
                 boardMoved = true;
               }
             } else {
-              const targetTile = board[i][flipX ? targetJ + 1 : targetJ - 1];
+              const targetTile = !boardMerge[i][flipX ? targetJ + 1 : targetJ - 1] && board[i][flipX ? targetJ + 1 : targetJ - 1];
               if (targetTile && targetTile.value === tile.value) {
                 value *= 2;
                 targetJ += flipX ? 1 : -1;
@@ -120,6 +132,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
                 const replaceTile = board[i][targetJ];
                 if (replaceTile !== null) {
                   removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: i, x: targetJ, removed: true });
+                  boardMerge[i][targetJ] = true;
                 }
                 board[i][targetJ] = { id: tile.id, value };
                 boardMoved = true;

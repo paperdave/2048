@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { moveUp, moveDown, moveRight, moveLeft } from '../actions';
+import { moveUp, moveDown, moveRight, moveLeft, start } from '../actions';
 import { throttle } from '@reverse/debounce';
 
 function Input({
@@ -8,37 +8,43 @@ function Input({
   moveDown,
   moveLeft,
   moveRight,
+  reset,
 }: {
   moveUp: Function,
   moveDown: Function,
   moveLeft: Function,
   moveRight: Function,
+  reset: Function,
 }) {
   useEffect(() => {
-    const activateKey = throttle(function (key: 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight') {
+    const activateKey = throttle(function (key: 'Up' | 'Left' | 'Down' | 'Right' | 'Reset') {
       switch (key) {
-        case 'ArrowUp': { moveUp(); break; }
-        case 'ArrowDown': { moveDown(); break; }
-        case 'ArrowLeft': { moveLeft(); break; }
-        case 'ArrowRight': { moveRight(); break; }
+        case 'Reset': { reset(); break; }
+        case 'Up': { moveUp(); break; }
+        case 'Down': { moveDown(); break; }
+        case 'Left': { moveLeft(); break; }
+        case 'Right': { moveRight(); break; }
         default:
           break;
       }
     }, 125);
     function onKeyPress(ev: KeyboardEvent) {
       switch (ev.key.toLowerCase()) {
+        case 'escape':
+        case 'r':
+          activateKey('Reset'); break;
         case 'w':
         case 'arrowup':
-          activateKey('ArrowUp'); break;
+          activateKey('Up'); break;
         case 's':
         case 'arrowdown':
-          activateKey('ArrowDown'); break;
+          activateKey('Down'); break;
         case 'a':
         case 'arrowleft':
-          activateKey('ArrowLeft'); break;
+          activateKey('Left'); break;
         case 'd':
         case 'arrowright':
-          activateKey('ArrowRight'); break;
+          activateKey('Right'); break;
         default:
       }
     }
@@ -59,5 +65,6 @@ export default connect(
     moveDown,
     moveLeft,
     moveRight,
+    reset: start,
   }
 )(Input);

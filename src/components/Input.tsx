@@ -15,7 +15,7 @@ function Input({
   moveRight: Function,
 }) {
   useEffect(() => {
-    const activateKey = throttle.throttle(function(key: string) {
+    const activateKey = throttle(function (key: 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight') {
       switch (key) {
         case 'ArrowUp': { moveUp(); break; }
         case 'ArrowDown': { moveDown(); break; }
@@ -26,13 +26,20 @@ function Input({
       }
     }, 125);
     function onKeyPress(ev: KeyboardEvent) {
-      switch (ev.key) {
-        case 'ArrowUp': { activateKey(ev.key); break; }
-        case 'ArrowDown': { activateKey(ev.key); break; }
-        case 'ArrowLeft': { activateKey(ev.key); break; }
-        case 'ArrowRight': { activateKey(ev.key); break; }
+      switch (ev.key.toLowerCase()) {
+        case 'w':
+        case 'arrowup':
+          activateKey('ArrowUp'); break;
+        case 's':
+        case 'arrowdown':
+          activateKey('ArrowDown'); break;
+        case 'a':
+        case 'arrowleft':
+          activateKey('ArrowLeft'); break;
+        case 'd':
+        case 'arrowright':
+          activateKey('ArrowRight'); break;
         default:
-          break;
       }
     }
 

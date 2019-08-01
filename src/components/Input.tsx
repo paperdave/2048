@@ -53,7 +53,7 @@ function Input({
     return () => {
       window.removeEventListener('keydown', onKeyPress);
     };
-  }, [moveUp, moveDown, moveLeft, moveRight]);
+  }, [moveUp, moveDown, moveLeft, moveRight, reset]);
 
   return null;
 }

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { IStore } from '../store';
 import { start } from '../actions';
-import styles from './Header.module.css';
+import styles from '../css/Header.module.css';
 import { motion } from 'framer-motion';
 
 type EventHandler = () => void;
@@ -32,7 +32,7 @@ function Header({ turns, score, start, scoreGained, highScore, highestTile }: ({
           x="395px"
           y="35px"
           fill="white"
-          font-size="20px"
+          fontSize="20px"
           textAnchor="middle"
           alignmentBaseline="middle"
           fontWeight='bold'
@@ -42,7 +42,7 @@ function Header({ turns, score, start, scoreGained, highScore, highestTile }: ({
           x="395px"
           y="56px"
           fill="#676767"
-          font-size="16px"
+          fontSize="16px"
           textAnchor="middle"
           alignmentBaseline="middle"
           fontWeight='bold'
@@ -55,7 +55,7 @@ function Header({ turns, score, start, scoreGained, highScore, highestTile }: ({
               y="35px"
               className={styles.scoreGained}
               fill="cornflowerblue"
-              font-size="20px"
+              fontSize="20px"
               textAnchor="left"
               alignmentBaseline="middle"
               fontWeight='bold'

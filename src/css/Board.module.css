@@ -9,3 +9,10 @@
   top: 0;
   left: 0;
 }
+
+@media (max-width: 544px) {
+  .root svg, .root {
+    width: calc(100vw - 32px);
+    height: calc(100vw - 32px);
+  }
+}

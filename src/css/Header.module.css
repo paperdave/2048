@@ -16,3 +16,10 @@
 .scoreGained {
   animation: moveUpAndFade 1s linear forwards;
 }
+
+@media (max-width: 544px) {
+  .root {
+    width: calc(100vw - 32px);
+    margin-bottom: calc(((100vw - 544px) * 9) / 128 - 14px);
+  }
+}

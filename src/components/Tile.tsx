@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import styles from './Tile.module.css';
+import styles from '../css/Tile.module.css';
 import { ITileExt } from '../reducers/game';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 function Tile({ tile }: { tile: ITileExt }) {
   const [tileValue, setTileValue] = useState(tile.value);
@@ -36,16 +37,20 @@ function Tile({ tile }: { tile: ITileExt }) {
     fontSize = 30;
   }
   return (
-    <motion.div
-      className={styles.root}
+    <motion.svg
+      width="110"
+      height="110"
+      viewBox="0 0 110 110"
+      fill="none"
+      className={clsx(styles.root, styles[`c${tileValue}`])}
       animate={{
-        x: tile.x * 114,
-        y: tile.y * 114,
+        x: tile.x * 114 + 30,
+        y: tile.y * 114 + 30,
         scale: bounce ? 1.08 : 1,
       }}
       initial={{
-        x: tile.x * 114,
-        y: tile.y * 114,
+        x: tile.x * 114 + 30,
+        y: tile.y * 114 + 30,
         scale: 0,
       }}
       transition={{ type: 'spring', damping: 40, stiffness: 650 }}
@@ -53,12 +58,14 @@ function Tile({ tile }: { tile: ITileExt }) {
         zIndex: tile.removed ? 0 : 2,
       }}
     >
-      <svg
-        width="110"
-        height="110"
-        viewBox="0 0 110 110"
-        fill="none"
-        className={styles[`c${tileValue}`]}
+      <motion.g
+        animate={{
+          scale: bounce ? 1.08 : 1,
+        }}
+        initial={{
+          scale: 0,
+        }}
+        transition={{ type: 'spring', damping: 60, stiffness: 500 }}
       >
         <path
           d="M5 0H105V5H110V105H105V110H5V105H0V5H5V0Z"
@@ -81,8 +88,8 @@ function Tile({ tile }: { tile: ITileExt }) {
         >
           {tileValue}
         </text>
-      </svg>
-    </motion.div>
+      </motion.g>
+    </motion.svg>
   )
 }
 

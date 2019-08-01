@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react'
-import styles from './App.module.css';
+import styles from '../css/App.module.css';
 import Board from './Board';
 import Input from './Input';
 import Header from './Header';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
-const easeInOutQuint = [0.86, 0, 0.07, 1];
+const easeInOutQuint = [0.86, 0, 0.1, 1];
 
 export default function App() {
   const [expanded, setExpanded] = useState(false);
@@ -31,7 +31,7 @@ export default function App() {
         animate={{ height: expanded ? 292.36 : '0' }}
         initial={{ height: '0' }}
         style={{ overflowY: 'hidden' }}
-        transition={{ ease: easeInOutQuint, duration: 0.35 }}
+        transition={{ ease: easeInOutQuint, duration: expanded ? 0.35 : 0.40 }}
       >
         <p>
           Previously, I have never used Redux, but I somehow learned the basics somewhat well, and
@@ -71,7 +71,7 @@ export default function App() {
       <motion.div
         animate={{ height: expanded ? '0' : 'auto' }}
         initial={{ height: 'auto' }}
-        transition={{ ease: easeInOutQuint, duration: expanded ? 0.35 : 0.50 }}
+        transition={{ ease: easeInOutQuint, duration: expanded ? 0.35 : 0.40 }}
         style={{ overflowY: 'hidden' }}
       >
         <Header />

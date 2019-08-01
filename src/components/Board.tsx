@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Board.module.css';
+import styles from '../css/Board.module.css';
 import { connect } from 'react-redux';
 import { IBoard, ITileExt } from '../reducers/game';
 import { IStore } from '../store';
@@ -22,16 +22,11 @@ function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITi
         <rect x="482" y="140" width="4" height="452" transform="rotate(90 482 140)" fill="#707070" />
         <rect x="482" y="254" width="4" height="452" transform="rotate(90 482 254)" fill="#707070" />
         <rect x="482" y="368" width="4" height="452" transform="rotate(90 482 368)" fill="#707070" />
-      </svg>
-
-      {/* The Tiles */}
-      <div className={styles.tileContainer}>
         {
-          (board
+          removedTiles.concat((board
             .flatMap((row, y) => row.map((tile, x) => (tile && { ...tile, x, y })))
             .filter(((tile) => tile !== null)) as ITileExt[])
-            .concat(removedTiles)
-            .sort((tile1, tile2) => (tile1.id > tile2.id) as any)
+            .sort((tile1, tile2) => (tile1.id > tile2.id) as any))
             .map((tile) => {
               if(!tile) {
                 return null;
@@ -42,8 +37,10 @@ function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITi
               />;
             })
         }
-        {JSON.stringify(lose)}
+      </svg>
 
+      {/* The Tiles */}
+      <div className={styles.tileContainer}>
       </div>
     </div>
   )

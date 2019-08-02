@@ -46,12 +46,10 @@ function Tile({ tile }: { tile: ITileExt }) {
       animate={{
         x: tile.x * 114 + 30,
         y: tile.y * 114 + 30,
-        scale: bounce ? 1.08 : 1,
       }}
       initial={{
         x: tile.x * 114 + 30,
         y: tile.y * 114 + 30,
-        scale: 0,
       }}
       transition={{ type: 'spring', damping: 40, stiffness: 650 }}
       style={{
@@ -60,7 +58,7 @@ function Tile({ tile }: { tile: ITileExt }) {
     >
       <motion.g
         animate={{
-          scale: bounce ? 1.08 : 1,
+          scale: bounce ? 1.12 : 1,
         }}
         initial={{
           scale: 0,

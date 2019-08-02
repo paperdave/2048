@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { IStore } from '../store';
 import { motion } from 'framer-motion';
 import { start } from '../actions';
+import useDelayedValue from '../utils/useDelayedValue';
 
 function LoseOverlay({
     score,
@@ -40,13 +41,13 @@ function LoseOverlay({
         x='226px' y='200px' fontSize='30px' fill='white'
         textAnchor="middle" alignmentBaseline="middle"
       >
-        Score: {score}
+        Score: {useDelayedValue(score, 500)}
       </text>
       <text
         x='226px' y='240px' fontSize='30px' fill='white'
         textAnchor="middle" alignmentBaseline="middle"
       >
-        Highest Tile: {highestTileThisGame}
+        Highest Tile: {useDelayedValue(highestTileThisGame, 500)}
       </text>
       <motion.g
         onClick={start}

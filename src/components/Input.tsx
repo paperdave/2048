@@ -1,10 +1,17 @@
-import React, { useEffect, useMemo, useCallback } from 'react'
+import React, { useEffect, useMemo, useCallback, useRef } from 'react'
 import { connect } from 'react-redux';
 import { moveUp, moveDown, moveRight, moveLeft, start } from '../actions';
 import { throttle } from '@reverse/debounce';
 import { Swipeable, defineSwipe } from 'react-touch';
+import styles from '../css/Input.module.css';
 
-const swipeConfig = defineSwipe({ swipeDistance: 50 });
+const swipeConfig = defineSwipe({ swipeDistance: 30 });
+
+function assignNoTouchMove(elem: HTMLElement | null) {
+  if (elem) {
+    elem.ontouchmove = (e) => e.preventDefault();
+  }
+}
 
 function Input({
   moveUp,
@@ -21,7 +28,7 @@ function Input({
   moveRight: Function,
   reset: Function,
   disabled: boolean,
-  children: JSX.Element,
+  children: JSX.Element | JSX.Element[],
 }) {
   const activateKey = useMemo(() => throttle(function (key: 'Up' | 'Left' | 'Down' | 'Right' | 'Reset') {
     switch (key) {
@@ -66,10 +73,10 @@ function Input({
   }, [disabled, onKeyPress]);
 
   // const activateKeyReset = useCallback(() => activateKey('Reset'), [activateKey])
-  const activateKeyUp = useCallback(() => (console.log('Up'), activateKey('Up')), [activateKey])
-  const activateKeyDown = useCallback(() => (console.log('Down'), activateKey('Down')), [activateKey])
-  const activateKeyLeft = useCallback(() => (console.log('Left'), activateKey('Left')), [activateKey])
-  const activateKeyRight = useCallback(() => (console.log('Right'), activateKey('Right')), [activateKey])
+  const activateKeyUp = useCallback(() => activateKey('Up'), [activateKey])
+  const activateKeyDown = useCallback(() => activateKey('Down'), [activateKey])
+  const activateKeyLeft = useCallback(() => activateKey('Left'), [activateKey])
+  const activateKeyRight = useCallback(() => activateKey('Right'), [activateKey])
 
   return <Swipeable
     onSwipeUp={activateKeyUp}
@@ -78,7 +85,12 @@ function Input({
     onSwipeRight={activateKeyRight}
     config={swipeConfig}
   >
-    {children}
+    <div
+      className={styles.touchDiv}
+      ref={assignNoTouchMove}
+    >
+      {children}
+    </div>
   </Swipeable>;
 }
 

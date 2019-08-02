@@ -7,7 +7,9 @@ import Tile from './Tile';
 
 function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITileExt[], lose: boolean }) {
   return (
-    <div className={styles.root}>
+    <div
+      className={styles.root}
+    >
       {/* The Board */}
       <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 0H502V10H512V502H502V512H10V502H0V10H10V0Z" fill="#252525" />
@@ -38,10 +40,6 @@ function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITi
             })
         }
       </svg>
-
-      {/* The Tiles */}
-      <div className={styles.tileContainer}>
-      </div>
     </div>
   )
 }

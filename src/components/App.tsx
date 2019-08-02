@@ -17,7 +17,6 @@ export default function App() {
   }, []);
 
   return (
-    <Input disabled={expanded}>
       <div className={clsx(styles.root, expanded && styles.expanded)}>
         <h1>2048</h1>
         <p>
@@ -76,9 +75,10 @@ export default function App() {
           style={{ overflowY: 'hidden' }}
         >
           <Header />
-          <Board />
+          <Input disabled={expanded}>
+            <Board />
+          </Input>
         </motion.div>
       </div>
-    </Input>
   )
 }

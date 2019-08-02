@@ -4,7 +4,11 @@
 This is a fully functional clone of [2048](https://play2048.co/), using React, Redux, CSS Modules,
 and Framer Motion.
 
-[Play the Game](https://davecode.me/2048)
+- [Play the Game](https://davecode.me/2048)
+
+## Behind the Scenes
+
+- [View Designs (Figma)](https://www.figma.com/file/RnQgH2CQY7XuaGLHhNKJa9)
 
 ## Available Scripts
 

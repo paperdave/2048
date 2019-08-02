@@ -1,3 +1,5 @@
+import 'array-flat-polyfill';
+import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';

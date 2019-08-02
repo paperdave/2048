@@ -6,6 +6,7 @@
     "@reverse/debounce": "^1.0.2",
     "@reverse/random": "^1.0.6",
     "@types/node": "^12.6.8",
+    "array-flat-polyfill": "^1.0.1",
     "clsx": "^1.0.4",
     "framer-motion": "^1.4.2",
     "react": "^16.8.6",

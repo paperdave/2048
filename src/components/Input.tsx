@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback, useRef } from 'react'
+import React, { useEffect, useMemo, useCallback } from 'react'
 import { connect } from 'react-redux';
 import { moveUp, moveDown, moveRight, moveLeft, start } from '../actions';
 import { throttle } from '@reverse/debounce';
@@ -9,7 +9,7 @@ const swipeConfig = defineSwipe({ swipeDistance: 30 });
 
 function assignNoTouchMove(elem: HTMLElement | null) {
   if (elem) {
-    elem.ontouchmove = (e) => e.preventDefault();
+    elem.addEventListener('touchmove', (e) => e.preventDefault());
   }
 }
 
@@ -48,15 +48,19 @@ function Input({
       case 'r':
         activateKey('Reset'); break;
       case 'w':
-      case 'arrowup':
-        activateKey('Up'); break;
+      case 'k':
+        case 'arrowup':
+          activateKey('Up'); break;
       case 's':
+      case 'j':
       case 'arrowdown':
         activateKey('Down'); break;
       case 'a':
+      case 'h':
       case 'arrowleft':
         activateKey('Left'); break;
       case 'd':
+      case 'l':
       case 'arrowright':
         activateKey('Right'); break;
       default:

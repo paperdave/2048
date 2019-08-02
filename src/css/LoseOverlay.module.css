@@ -1,0 +1,8 @@
+.root {
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.lose {
+  opacity: 1;
+  transition: opacity 900ms linear 1000ms;
+}

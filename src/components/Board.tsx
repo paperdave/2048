@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { IBoard, ITileExt } from '../reducers/game';
 import { IStore } from '../store';
 import Tile from './Tile';
+import LoseOverlay from './LoseOverlay';
 
 function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITileExt[], lose: boolean }) {
   return (
@@ -39,6 +40,11 @@ function Board({ board, removedTiles, lose }: { board: IBoard, removedTiles: ITi
               />;
             })
         }
+        <LoseOverlay
+          x='30px'
+          y='30px'
+          visible={lose}
+        />
       </svg>
     </div>
   )

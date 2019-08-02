@@ -11,6 +11,7 @@ export interface IGame {
   score: number,
   highScore: number,
   highestTile: number,
+  highestTileThisGame: number,
   scoreGained: number | null,
   turns: number,
   removedTiles: ITileExt[],
@@ -57,6 +58,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
         lose: false,
         highScore: state ? state.highScore : 0,
         highestTile: state ? state.highestTile : 2,
+        highestTileThisGame: 2,
       };
 
       // Spawn Two Tiles
@@ -108,6 +110,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
 
       let boardMoved = false;
       let highestTile = state.highestTile;
+      let highestTileThisGame = state.highestTileThisGame;
       let scoreGained = 0;
 
       for (let i = 0; i < 4; i++) {
@@ -138,7 +141,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
                 if (replaceTile !== null) {
                   removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: targetJ, x: i, removed: true });
                   boardMerge[targetJ][i] = true;
-                  highestTile = Math.max(highestTile, value);
+                  highestTileThisGame = Math.max(highestTileThisGame, value);
                 }
                 board[targetJ][i] = { id: tile.id, value };;
                 boardMoved = true;
@@ -156,7 +159,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
                 if (replaceTile !== null) {
                   removedTiles.push({ id: replaceTile.id, value: replaceTile.value, y: i, x: targetJ, removed: true });
                   boardMerge[i][targetJ] = true;
-                  highestTile = Math.max(highestTile, value);
+                  highestTileThisGame = Math.max(highestTileThisGame, value);
                 }
                 board[i][targetJ] = { id: tile.id, value };
                 boardMoved = true;
@@ -165,6 +168,8 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
           }
         }
       }
+
+      highestTile = state.highScore === state.score ? highestTileThisGame : highestTile;
 
       if (boardMoved) {
         const score = state.score + scoreGained;
@@ -178,6 +183,7 @@ export default function reduce(state: IGame, action: ActionObject): IGame {
           scoreGained,
           removedTiles,
           highestTile,
+          highestTileThisGame,
         };
 
         newState = reduce(newState, spawnNewTile());

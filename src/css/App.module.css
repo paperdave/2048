@@ -9,6 +9,10 @@ h1 {
   margin-bottom: 10px;
 }
 
+.info {
+  position: relative;
+}
+
 .info > p:first-child {
   margin-top: 0;
 }
@@ -22,5 +26,5 @@ h1 {
 
 .root.expanded {
   transition-duration: 350ms;
-  font-size: 1.20em;
+  font-size: 1.20rem;
 }

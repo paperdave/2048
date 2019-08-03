@@ -8,6 +8,17 @@ import clsx from 'clsx';
 
 const easeInOutQuint = [0.86, 0, 0.1, 1];
 
+function DuplicateMagic({ children }: { children: JSX.Element[] | JSX.Element}) {
+  return <>
+    <div style={{ position: 'absolute' }}>
+      {children}
+    </div>
+    <div style={{ fontSize:'1.20rem', visibility: 'hidden', overflow: 'visible' }} aria-hidden>
+      {children}
+    </div>
+  </>
+}
+
 export default function App() {
   const [expanded, setExpanded] = useState(false);
 
@@ -27,28 +38,29 @@ export default function App() {
 
         <motion.div
           className={styles.info}
-          // 292.36 is the calculated height with the font-size
-          animate={{ height: expanded ? 292.36 : '0' }}
+          animate={{ height: expanded ? 'auto' : '0' }}
           initial={{ height: '0' }}
           style={{ overflowY: 'hidden' }}
           transition={{ ease: easeInOutQuint, duration: expanded ? 0.35 : 0.40 }}
         >
-          <p>
-            Previously, I have never used Redux, but I somehow learned the basics somewhat well, and
-            implemented a copy of <a href="https://play2048.co/">2048</a> in about no time. Once I had all the game mechanics done, I
-            started building the game UI.
-          </p>
-          <p>
-            For the Game UI, I designed it all myself with <a href="https://figma.com">Figma</a>,
-            exported it into a couple of React Components, and then animated it
-            with <a href="https://framer.com/motion/">Framer Motion</a>. A couple more reducer tweaks
-            later, and then you got a full game.
-          </p>
-          <p>
-            The game is <a href="https://github.com/imdaveead/2048">open sourced on GitHub</a>, so you can see how I programmed it. And it's not that
-            bad of code, I'd say at least.
-          </p>
-          <div style={{height: '0.25em'}}></div>
+          <DuplicateMagic>
+            <p>
+              Previously, I have never used Redux, but I somehow learned the basics somewhat well, and
+              implemented a copy of <a href="https://play2048.co/">2048</a> in about no time. Once I had all the game mechanics done, I
+              started building the game UI.
+            </p>
+            <p>
+              For the Game UI, I designed it all myself with <a href="https://figma.com">Figma</a>,
+              exported it into a couple of React Components, and then animated it
+              with <a href="https://framer.com/motion/">Framer Motion</a>. A couple more reducer tweaks
+              later, and then you got a full game.
+            </p>
+            <p>
+              The game is <a href="https://github.com/imdaveead/2048">open sourced on GitHub</a>, so you can see how I programmed it. And it's not that
+              bad of code, I'd say at least.
+            </p>
+            <div style={{ height: '0.25em' }}></div>
+          </DuplicateMagic>
         </motion.div>
 
         <p>

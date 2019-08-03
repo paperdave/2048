@@ -76,9 +76,8 @@ function Tile({ tile }: { tile: ITileExt }) {
           strokeWidth="5"
         />
         <text
-          x="50%" y="50%"
+          x={55} y={55 + fontSize / 2 - 5}
           textAnchor="middle"
-          alignmentBaseline="middle"
           fontSize={fontSize}
           fill="black"
           className={styles.text}

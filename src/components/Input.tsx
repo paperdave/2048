@@ -43,6 +43,7 @@ function Input({
   }, 125), [moveUp, moveDown, moveLeft, moveRight, reset]);
 
   const onKeyPress = useCallback((ev: KeyboardEvent) => {
+    ev.preventDefault();
     switch (ev.key.toLowerCase()) {
       case 'escape':
       case 'r':

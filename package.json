@@ -46,6 +46,5 @@
     "eslint": "^5.16.0",
     "eslint-config-dave": "^2.1.1",
     "typescript": "^3.5.3"
-  },
-  "homepage": "https://davecode.me/2048"
+  }
 }
